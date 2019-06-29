@@ -77,7 +77,7 @@ func (s *StsTestSuite) TestAssumeRole(c *C) {
 	now := time.Now()
 	client := NewClient(accessKeyId, accessKeySecret, roleArn, "sts_test")
 
-	resp, err := client.AssumeRole(900)
+	resp, err := client.AssumeRole(900,"")
 	c.Assert(err, IsNil)
 
 	c.Assert(resp.RequestId, Not(Equals), "")
@@ -94,7 +94,7 @@ func (s *StsTestSuite) TestAssumeRole(c *C) {
 func (s *StsTestSuite) TestAssumeRoleNegative(c *C) {
 	// AccessKeyID invalid
 	client := NewClient("", accessKeySecret, roleArn, "sts_test")
-	resp, err := client.AssumeRole(900)
+	resp, err := client.AssumeRole(900,"")
 	c.Assert(resp, IsNil)
 	c.Assert(err, NotNil)
 	log.Println("Error:", err)
@@ -110,7 +110,7 @@ func (s *StsTestSuite) TestAssumeRoleNegative(c *C) {
 
 	// AccessKeySecret invalid
 	client = NewClient(accessKeyId, accessKeySecret+" ", roleArn, "sts_test")
-	resp, err = client.AssumeRole(900)
+	resp, err = client.AssumeRole(900,"")
 	c.Assert(resp, IsNil)
 	c.Assert(err, NotNil)
 
@@ -123,7 +123,7 @@ func (s *StsTestSuite) TestAssumeRoleNegative(c *C) {
 	// SessionName invalid
 	client = NewClient(accessKeyId, accessKeySecret, roleArn, "x")
 
-	resp, err = client.AssumeRole(900)
+	resp, err = client.AssumeRole(900,"")
 	c.Assert(resp, IsNil)
 	c.Assert(err, NotNil)
 
